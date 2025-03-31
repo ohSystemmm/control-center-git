@@ -11,10 +11,10 @@ func buttonLayout(app *tview.Application) *tview.Grid {
 	cols := []int{0, 25, 2, 25, 2, 25, 0}
 
 	buttonLabels := []string{
-		"Func1", "Func2", "Func3",
-		"Func4", "Func5", "Func6",
-		"Func7", "Func8", "Func9",
-		"Quit",
+		"Change Design", "Wallpaper Type", "Apply Wallpaper",
+		"Set Daishow Folder", "Update Fastfetch", "Change Avatar",
+		"Update Grub Theme", "Update SDDM Theme", "Blue Light Filter",
+		"Exit",
 	}
 
 	buttonActions := []func(){
@@ -61,6 +61,7 @@ func button(label string, action func()) *tview.Button {
 	return tview.NewButton(label).SetSelectedFunc(action)
 }
 
+// TODO: Fix Event Handling on last Row
 func eventHandler(buttons []*tview.Button, buttonPositions map[*tview.Button][2]int, quitButton, lastButton *tview.Button, app *tview.Application) func(event *tcell.EventKey) *tcell.EventKey {
 	return func(event *tcell.EventKey) *tcell.EventKey {
 		currentItem := app.GetFocus()
