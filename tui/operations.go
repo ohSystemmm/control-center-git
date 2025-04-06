@@ -1,8 +1,9 @@
-package objective
+package tui
 
 import (
-	"github.com/rivo/tview"
 	"os"
+
+	"github.com/rivo/tview"
 )
 
 func TempFunc(app *tview.Application) func() {
@@ -60,6 +61,26 @@ func UpdateSddmTheme(app *tview.Application) func() {
 }
 
 func BlueLightFilter(app *tview.Application) func() {
+	return func() {
+	}
+}
+func KeyboardLayout(app *tview.Application) func() {
+	return func() {
+	}
+}
+func UnlockDatabase(app *tview.Application) func() {
+	return func() {
+	}
+}
+func RegeneratePywal(app *tview.Application) func() {
+	return func() {
+	}
+}
+func XDGSettings(app *tview.Application) func() {
+	return func() {
+	}
+}
+func ChangeShell(app *tview.Application) func() {
 	return func() {
 	}
 }

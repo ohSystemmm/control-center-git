@@ -6,8 +6,7 @@ import (
 )
 
 func main() {
-	app := tui.SetupUI()
-	if err := app.Run(); err != nil {
+	if err := tui.SetupUI().Run(); err != nil {
 		log.Fatalf("Error running application: %v", err)
 	}
 }
