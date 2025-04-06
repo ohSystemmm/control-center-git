@@ -6,10 +6,15 @@ import (
 	"github.com/rivo/tview"
 )
 
-func buttonLayout(app *tview.Application) *tview.Grid {
-	rows := []int{0, 3, 1, 3, 1, 3, 1, 3, 0, 3, 1}
-	cols := []int{0, 25, 2, 25, 2, 25, 0}
+func MasterLayout(app *tview.Application) *tview.Grid {
+	return tview.NewGrid().
+		SetRows(3, 0, 3).
+		SetColumns(8, 0, 8).
+		SetBorders(true).
+		AddItem(buttonLayout(app), 1, 1, 1, 1, 0, 0, true)
+}
 
+func buttonLayout(app *tview.Application) *tview.Grid {
 	buttonLabels := []string{
 		"Change Design", "Wallpaper Type", "Apply Wallpaper",
 		"Set Daishow Folder", "Update Fastfetch", "Change Avatar",
@@ -18,15 +23,15 @@ func buttonLayout(app *tview.Application) *tview.Grid {
 	}
 
 	buttonActions := []func(){
-		objective.TempFunc(app), objective.TempFunc(app), objective.TempFunc(app),
-		objective.TempFunc(app), objective.TempFunc(app), objective.TempFunc(app),
-		objective.TempFunc(app), objective.TempFunc(app), objective.TempFunc(app),
+		objective.ChangeDesign(app), objective.WallpaperType(app), objective.ApplyWallpaper(app),
+		objective.DiashowFolder(app), objective.UpdateFastfetch(app), objective.ChangeAvatar(app),
+		objective.UpdateGrubTheme(app), objective.UpdateSddmTheme(app), objective.BlueLightFilter(app),
 		objective.QuitApp(app),
 	}
 
 	grid := tview.NewGrid().
-		SetRows(rows...).
-		SetColumns(cols...)
+		SetRows(0, 3, 1, 3, 1, 3, 1, 3, 0).
+		SetColumns(0, 25, 2, 25, 2, 25, 0)
 
 	var buttons []*tview.Button
 	buttonPositions := make(map[*tview.Button][2]int)
@@ -38,16 +43,15 @@ func buttonLayout(app *tview.Application) *tview.Grid {
 
 		var row, col int
 		if i == len(buttonLabels)-1 {
-			row, col = 7, 3 // Absolute Position
+			row, col = 7, 5
 			quitButton = btn
 		} else {
-			row = 1 + (i/3)*2 // 1 Row Threshold + Position
-			col = 1 + (i%3)*2 // 3 Col Threshold + Position
+			row = 1 + (i/3)*2
+			col = 1 + (i%3)*2
 			lastButton = btn
 		}
 
 		grid.AddItem(btn, row, col, 1, 1, 0, 0, i == 0)
-
 		buttons = append(buttons, btn)
 		buttonPositions[btn] = [2]int{row, col}
 	}
@@ -61,17 +65,18 @@ func button(label string, action func()) *tview.Button {
 	return tview.NewButton(label).SetSelectedFunc(action)
 }
 
-// TODO: Fix Event Handling on last Row
 func eventHandler(buttons []*tview.Button, buttonPositions map[*tview.Button][2]int, quitButton, lastButton *tview.Button, app *tview.Application) func(event *tcell.EventKey) *tcell.EventKey {
 	return func(event *tcell.EventKey) *tcell.EventKey {
 		currentItem := app.GetFocus()
 		var currentButton *tview.Button
+
 		for _, btn := range buttons {
 			if btn == currentItem {
 				currentButton = btn
 				break
 			}
 		}
+
 		if currentButton == nil {
 			return event
 		}
