@@ -78,11 +78,11 @@ func eventHandler(buttons []*tview.Button, buttonPositions map[*tview.Button][2]
 		case tcell.KeyRight:
 			nextButton = findButtonAt(currentRow, currentCol+2, buttonPositions)
 		case tcell.KeyDown:
-			nextButton = findButtonAt(currentRow+1, currentCol, buttonPositions)
+			nextButton = findButtonAt(currentRow+2, currentCol, buttonPositions)
 		case tcell.KeyLeft:
 			nextButton = findButtonAt(currentRow, currentCol-2, buttonPositions)
 		case tcell.KeyUp:
-			nextButton = findButtonAt(currentRow-1, currentCol, buttonPositions)
+			nextButton = findButtonAt(currentRow-2, currentCol, buttonPositions)
 		}
 
 		if nextButton != nil {

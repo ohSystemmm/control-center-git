@@ -80,6 +80,7 @@ func XDGSettings(app *tview.Application) func() {
 	return func() {
 	}
 }
+
 func ChangeShell(app *tview.Application) func() {
 	return func() {
 	}
